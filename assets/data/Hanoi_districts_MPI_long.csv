@@ -1,0 +1,181 @@
+Dist_Name,Variable,Value
+Ba Dinh,Cooking fuel ,51.52
+Ba Vi,Cooking fuel ,91.19
+Bac Tu Liem,Cooking fuel ,66.65
+Cau Giay,Cooking fuel ,39.46
+Chuong My,Cooking fuel ,93.99
+Dan Phuong,Cooking fuel ,90.9
+Dong Anh,Cooking fuel ,91.06
+Dong Da,Cooking fuel ,49.63
+Gia Lam,Cooking fuel ,83.55
+Ha Dong,Cooking fuel ,56.21
+Hai Ba Trung,Cooking fuel ,48.35
+Hoai Duc,Cooking fuel ,83.49
+Hoan Kiem,Cooking fuel ,53.22
+Hoang Mai,Cooking fuel ,49.66
+Long Bien,Cooking fuel ,60.44
+Me Linh,Cooking fuel ,93.16
+My Duc,Cooking fuel ,92.17
+Nam Tu Liem,Cooking fuel ,57.86
+Phu Xuyen,Cooking fuel ,90.74
+Phuc Tho,Cooking fuel ,93.2
+Quoc Oai,Cooking fuel ,92.09
+Soc Son,Cooking fuel ,92.79
+Son tay,Cooking fuel ,91.91
+Tay Ho,Cooking fuel ,58.45
+Thach That,Cooking fuel ,90.19
+Thanh Oai,Cooking fuel ,91.98
+Thanh Tri,Cooking fuel ,72.37
+Thanh Xuan,Cooking fuel ,42.85
+Thuong Tin,Cooking fuel ,91.35
+Ung Hoa,Cooking fuel ,94.48
+Ba Dinh,Housing ,1.62
+Ba Vi,Housing ,4.66
+Bac Tu Liem,Housing ,1.7
+Cau Giay,Housing ,1.03
+Chuong My,Housing ,0.6
+Dan Phuong,Housing ,2.31
+Dong Anh,Housing ,0.78
+Dong Da,Housing ,0.83
+Gia Lam,Housing ,1.32
+Ha Dong,Housing ,2.72
+Hai Ba Trung,Housing ,1.11
+Hoai Duc,Housing ,3.78
+Hoan Kiem,Housing ,0.0
+Hoang Mai,Housing ,2.53
+Long Bien,Housing ,3.38
+Me Linh,Housing ,0.35
+My Duc,Housing ,5.22
+Nam Tu Liem,Housing ,4.16
+Phu Xuyen,Housing ,1.54
+Phuc Tho,Housing ,5.89
+Quoc Oai,Housing ,0.0
+Soc Son,Housing ,0.83
+Son tay,Housing ,5.42
+Tay Ho,Housing ,2.61
+Thach That,Housing ,4.75
+Thanh Oai,Housing ,0.8
+Thanh Tri,Housing ,4.08
+Thanh Xuan,Housing ,1.06
+Thuong Tin,Housing ,4.68
+Ung Hoa,Housing ,2.56
+Ba Dinh,Assets,10.63
+Ba Vi,Assets,5.75
+Bac Tu Liem,Assets,11.8
+Cau Giay,Assets,16.25
+Chuong My,Assets,4.38
+Dan Phuong,Assets,11.03
+Dong Anh,Assets,8.4
+Dong Da,Assets,11.4
+Gia Lam,Assets,13.2
+Ha Dong,Assets,13.72
+Hai Ba Trung,Assets,12.94
+Hoai Duc,Assets,7.38
+Hoan Kiem,Assets,9.84
+Hoang Mai,Assets,10.89
+Long Bien,Assets,16.37
+Me Linh,Assets,4.28
+My Duc,Assets,3.35
+Nam Tu Liem,Assets,11.38
+Phu Xuyen,Assets,6.41
+Phuc Tho,Assets,8.48
+Quoc Oai,Assets,8.86
+Soc Son,Assets,9.78
+Son tay,Assets,6.19
+Tay Ho,Assets,19.45
+Thach That,Assets,9.34
+Thanh Oai,Assets,8.23
+Thanh Tri,Assets,12.62
+Thanh Xuan,Assets,13.06
+Thuong Tin,Assets,12.82
+Ung Hoa,Assets,5.47
+Ba Dinh,Drinking water ,0.34
+Ba Vi,Drinking water ,32.61
+Bac Tu Liem,Drinking water ,2.81
+Cau Giay,Drinking water ,0.09
+Chuong My,Drinking water ,63.4
+Dan Phuong,Drinking water ,54.78
+Dong Anh,Drinking water ,51.91
+Dong Da,Drinking water ,0.03
+Gia Lam,Drinking water ,20.78
+Ha Dong,Drinking water ,1.23
+Hai Ba Trung,Drinking water ,0.1
+Hoai Duc,Drinking water ,24.61
+Hoan Kiem,Drinking water ,0.12
+Hoang Mai,Drinking water ,1.04
+Long Bien,Drinking water ,0.27
+Me Linh,Drinking water ,69.8
+My Duc,Drinking water ,87.25
+Nam Tu Liem,Drinking water ,1.84
+Phu Xuyen,Drinking water ,82.12
+Phuc Tho,Drinking water ,62.67
+Quoc Oai,Drinking water ,31.01
+Soc Son,Drinking water ,71.22
+Son tay,Drinking water ,11.07
+Tay Ho,Drinking water ,1.86
+Thach That,Drinking water ,36.59
+Thanh Oai,Drinking water ,71.57
+Thanh Tri,Drinking water ,5.37
+Thanh Xuan,Drinking water ,0.02
+Thuong Tin,Drinking water ,82.14
+Ung Hoa,Drinking water ,84.8
+Ba Dinh,Sanitation ,0.36
+Ba Vi,Sanitation ,7.94
+Bac Tu Liem,Sanitation ,0.07
+Cau Giay,Sanitation ,0.17
+Chuong My,Sanitation ,4.67
+Dan Phuong,Sanitation ,1.63
+Dong Anh,Sanitation ,0.59
+Dong Da,Sanitation ,0.03
+Gia Lam,Sanitation ,0.53
+Ha Dong,Sanitation ,0.1
+Hai Ba Trung,Sanitation ,0.1
+Hoai Duc,Sanitation ,0.94
+Hoan Kiem,Sanitation ,0.36
+Hoang Mai,Sanitation ,0.75
+Long Bien,Sanitation ,0.04
+Me Linh,Sanitation ,0.75
+My Duc,Sanitation ,2.85
+Nam Tu Liem,Sanitation ,0.12
+Phu Xuyen,Sanitation ,2.65
+Phuc Tho,Sanitation ,2.24
+Quoc Oai,Sanitation ,2.35
+Soc Son,Sanitation ,3.3
+Son tay,Sanitation ,3.52
+Tay Ho,Sanitation ,0.14
+Thach That,Sanitation ,3.06
+Thanh Oai,Sanitation ,0.52
+Thanh Tri,Sanitation ,0.16
+Thanh Xuan,Sanitation ,0.06
+Thuong Tin,Sanitation ,1.39
+Ung Hoa,Sanitation ,1.73
+Ba Dinh,Electricity ,0.0
+Ba Vi,Electricity ,0.0
+Bac Tu Liem,Electricity ,0.0
+Cau Giay,Electricity ,0.0
+Chuong My,Electricity ,0.1
+Dan Phuong,Electricity ,0.0
+Dong Anh,Electricity ,0.0
+Dong Da,Electricity ,0.0
+Gia Lam,Electricity ,0.02
+Ha Dong,Electricity ,0.0
+Hai Ba Trung,Electricity ,0.02
+Hoai Duc,Electricity ,0.02
+Hoan Kiem,Electricity ,0.0
+Hoang Mai,Electricity ,0.06
+Long Bien,Electricity ,0.0
+Me Linh,Electricity ,0.0
+My Duc,Electricity ,0.0
+Nam Tu Liem,Electricity ,0.0
+Phu Xuyen,Electricity ,0.04
+Phuc Tho,Electricity ,0.0
+Quoc Oai,Electricity ,0.1
+Soc Son,Electricity ,0.0
+Son tay,Electricity ,0.0
+Tay Ho,Electricity ,0.0
+Thach That,Electricity ,0.0
+Thanh Oai,Electricity ,0.07
+Thanh Tri,Electricity ,0.47
+Thanh Xuan,Electricity ,0.0
+Thuong Tin,Electricity ,0.02
+Ung Hoa,Electricity ,0.0
