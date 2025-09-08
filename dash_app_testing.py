@@ -12,6 +12,9 @@ import json
 from lorem_text import lorem
 from dash import Dash, html, dcc, Output, Input, State, callback, dash_table
 import dash_bootstrap_components as dbc
+import random
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+import plotly.graph_objects as go
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -37,6 +40,32 @@ brand_colors = {
     "White": "#ffffff",
     "Black": "#000000"
 }
+
+green_gradient = [
+    "#095d40",
+    "#206044",
+    "#3a6649",
+    "#547d5b",
+    "#6f946d",
+    "#8aa97f",
+    "#a5be91",
+    "#b8d099",
+    "#c1d88e",
+    "#d1e7a8"
+]
+
+green_pie =  [
+    "#095d40",  
+    "#8aa97f",  
+    "#206044",  
+    "#d1e7a8",   
+    "#6f946d",  
+    "#c1d88e", 
+    "#547d5b",  
+    "#aabf7e",  
+    "#3e571e",  
+]
+
 
 tabs = [
         'Food Systems Stakeholders',
@@ -72,6 +101,8 @@ variables = df_mpi['Variable'].unique()
 # Loading and Formatting Food Systems Stakeholders Data
 df_sh = pd.read_csv(path+"/hanoi_stakeholders.csv").dropna(how='any').astype(str)
 
+# Loading supply flow data for Sankey Diagram
+df_sankey = pd.read_csv(path+'/hanoi_supply.csv')
 
 # ------------------------- Preloading Figures ------------------------- #
 # Adding MPI Choropleth to the map
@@ -86,7 +117,7 @@ fig_ch = px.choropleth_mapbox(MPI, geojson=geojson,
                             'Dist_Name':'District Name'},
 
                     mapbox_style="carto-positron",
-                    zoom=8,
+                    zoom=7.75,
                     center={"lat": MPI.geometry.centroid.y.mean(), 
                             "lon": MPI.geometry.centroid.x.mean()}
                     )
@@ -104,10 +135,45 @@ fig_ch.update_layout(
 df_sh_area_count = pd.DataFrame(df_sh['Area of Activity in the food system'].value_counts()).reset_index()
 df_sh_area_count.columns = ['name','count']
 initial_piechart_1 = px.pie(df_sh_area_count, values='count', names='name', hole=0, 
-                color_discrete_sequence=px.colors.sequential.Reds)
+                color_discrete_sequence=green_pie)
 initial_piechart_1.update(layout_showlegend=False)
 initial_piechart_1.update_traces(hoverinfo='percent', textinfo='label', textposition='inside', insidetextorientation='radial')
 initial_piechart_1.update_layout(margin = dict(t=0.25, l=0.25, r=0.25, b=0.25))
+
+# Preloading Sankey Diagram 2022
+df_sankey_2022 = df_sankey[df_sankey['Year']==2022]
+flow1 = df_sankey_2022[['province', 'Target', 'Supply to Hanoi']].rename(
+    columns={'province':'source', 'Target':'target', 'Supply to Hanoi':'supply'})
+
+flow2 = df_sankey_2022[['Target', 'Target_1', 'Rice supply']].rename(
+    columns={'Target':'source', 'Target_1':'target', 'Rice supply':'supply'})
+
+df_sankey_final = pd.concat([flow1.drop_duplicates(), flow2.groupby(['source','target']).sum().reset_index()], ignore_index=True)
+labels = list(pd.unique(df_sankey_final[['source','target']].values.ravel('K')))
+
+source_indices = df_sankey_final['source'].apply(lambda x: labels.index(x))
+target_indices = df_sankey_final['target'].apply(lambda x: labels.index(x))
+weights = df_sankey_final['supply']
+
+#node_colors = [brand_colors['Seagreen'] if l in [ 'Hanoi rural', 'Hanoi urban'] else brand_colors['Dark khaki'] if "Hanoi" == l else brand_colors['Dark slate grey'] for l in labels]
+node_colors = ["#206044" for l in labels]
+link_colors = ["rgba(209, 231, 168, 0.5)" for link in df_sankey_final['source']]
+fig_sankey = go.Figure(data=[go.Sankey(
+    node=dict(label=labels, color=node_colors, pad=15, thickness=20),
+    link=dict(source=source_indices, target=target_indices, value=weights, color=link_colors)
+    )])
+
+fig_sankey.update_layout(
+    hovermode='x',
+    font=dict(size=12, color='black'),
+    paper_bgcolor='#ffffff',
+    plot_bgcolor='rgba(0,0,0,0)',
+    margin=dict(l=10, r=10, t=30, b=10),  # reduce margins
+    #height=750,  
+    width=None  # let it auto-scale
+)
+fig_sankey.update_layout(transition={'duration':50, 'easing':'cubic-in-out'})
+
 
 # Custom styling for tabs
 tab_style = {
@@ -129,6 +195,16 @@ tab_selected_style = {
     'fontWeight': 'bold'
 }
 
+kpi_card_style ={"textAlign": "center", 
+                "backgroundColor": "#d1e7a8", 
+                "color":brand_colors['Seagreen'],
+                "font-weight":"bold",
+                "border-radius": "8px",
+                "padding":"10px",
+                "margin-bottom":"10px",
+                "flexDirection": "column"
+                }
+
 
 # ------------------------- Defining tab layouts ------------------------- #
 
@@ -136,38 +212,56 @@ def poverty_tab_layout():
     return html.Div([
         # Left Panel: text, dropdown, bar chart
         html.Div([
+                # Card 1: Header and text
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H2("Multidimensional Poverty Dashboard", style={"color": brand_colors['Black'], "margin": "0", 'textAlign': 'center', "padding":"4px" }),
+                        html.P(str(lorem.words(30)), style={"padding": "0", "textAlign": "justify"}),
+                                ])
+                        ], style={"height": "100%", "padding":"6px" ,"box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
 
-                html.H2("Multidimensional Poverty Dashboard", style={"color": brand_colors['Black'], "margin": "0"}),
-                html.P(str(lorem.words(60)), style={"padding": "0", "textAlign": "justify"}),
-                html.P('Please select a variable from the dropdown menu:'),
-                dcc.Dropdown(
-                    id='variable-dropdown',
-                    options=[{'label': v, 'value': v} for v in variables],
-                value=variables[0],
-                style={"margin-bottom": "20px"}),
-                dcc.Graph(id='bar-plot',
-                        style={
-                        'padding': '0',
-                        'margin': '0',
-                        "border-radius": "8px",
-                        "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
-                        })
-                ], style={
-                    "width": "min(50vw)",
-                    "height": "100vh", 
-                    "padding": "10px",
-                    "backgroundColor": "#f9f9f9",
-                    "border-radius": "0",
-                    "margin": "0",
-                    #"box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
-                    "display": "flex",
-                    "flexDirection": "column",
-                    "justifyContent": "flex-start",
-                    "overflowY": "auto",
-                    "box-sizing": "border-box",
-                    "zIndex": 2,
-                    "position": "relative",
-                }),
+                # Card 2: Filter
+                dbc.Card([
+                    dbc.CardBody([
+                        html.P('Please select a variable from the dropdown menu:'),
+                        dcc.Dropdown(
+                            id='variable-dropdown',
+                            options=[{'label': v, 'value': v} for v in variables],
+                        value=variables[0],
+                        style={"margin-bottom": "20px"}),
+                                ])
+                        ], style={"height": "100%", "padding":"6px" ,"box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
+
+
+                # Card 3: Barplot
+                dbc.Card([
+                    dbc.CardBody([
+                        dcc.Graph(id='bar-plot',
+                                style={
+                                'padding': '0',
+                                'margin': '0',
+                                "border-radius": "8px",
+                                "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
+                                })
+                                ])
+                        ], style={"height": "100%", "padding":"6px" ,"box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
+
+                    ], style={
+                        "width": "min(50vw)",
+                        "height": "100vh", 
+                        "padding": "10px",
+                        "backgroundColor": "#f9f9f9",
+                        "border-radius": "0",
+                        "margin": "0",
+                        #"box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "justifyContent": "flex-start",
+                        "overflowY": "auto",
+                        "box-sizing": "border-box",
+                        "zIndex": 2,
+                        "position": "relative",
+                    }),
 
         # Right panel: map, full height
         html.Div([
@@ -199,105 +293,172 @@ def poverty_tab_layout():
         "height": "100vh"
     })
 
+
 def stakeholders_tab_layout():
-        return html.Div([
-                    # Left Panel: text, stakeholder plots etc.
-                    html.Div([  html.H2("Food Systems Stakeholders"),
-                                html.P(str(lorem.words(30)), style={"padding": "0", "textAlign": "justify"}),
+    return html.Div([
+        # Left Panel
+        html.Div([
+            # Card 1: Title & Description
+            dbc.Card([
+                dbc.CardBody([
+                    html.H2("Food Systems Stakeholders", className="card-title", style={'textAlign': 'center', "padding":"4px" }),
+                    html.P(str(lorem.words(30)), style={"textAlign": "justify", "padding":"12px" })
+                ])
+            ], style={"margin-bottom": "15px", "box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
 
-                                html.Label("Filter Database by: "),
-                                dcc.Dropdown(
-                                            id='pie-filter-dropdown',
-                                            options=[
-                                                {'label': 'Area of Activity', 'value': 'Area'},
-                                                {'label': 'Stakeholder Category', 'value': 'Category'}
-                                            ],
-                                            value='Area',
-                                            clearable=False,
-                                            style={"margin-bottom": "20px"}
-                                        ),
+            # Card 2: Filter Dropdown
+            dbc.Card([
+                dbc.CardBody([
+                    html.Label("Filter Database by:", style={"fontWeight": "bold", "padding":"4px"}),
+                    dcc.Dropdown(
+                        id='pie-filter-dropdown',
+                        options=[
+                            {'label': 'Area of Activity', 'value': 'Area'},
+                            {'label': 'Stakeholder Category', 'value': 'Category'}
+                        ],
+                        value='Area',
+                        clearable=False,
+                        style={"margin-top": "10px"}
+                    )
+                ])
+            ], style={"margin-bottom": "15px", "box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
 
-                                dcc.Graph(id='piechart', figure=initial_piechart_1, style={'padding':'2px',
-                                                                                         "box-shadow": "0 1px 2px rgba(0,0,0,0.05)"}),
+            # Card 3: Pie Chart
+            dbc.Card([
+                dbc.CardBody([
+                    dcc.Graph(id='piechart', figure=initial_piechart_1, style={"height": "50vh"})
+                ])
+            ], style={"box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
+            dcc.Store(id='selected_slice', data=None)
+        ], style={
+            "flex": "1 1 40%",
+            "padding": "10px",
+            "backgroundColor": "#f9f9f9",
+            "display": "flex",
+            "flexDirection": "column",
+            "overflowY": "auto"
+        }),
 
-                                dcc.Store(id='selected_slice', data=None)
+        # Right Panel: Table 
+        html.Div([
+            dbc.Card([
+                #dbc.CardHeader("Stakeholder Database"),
+                dbc.CardBody([
+                    dash_table.DataTable(
+                        id='sh_table',
+                        data=df_sh.to_dict('records'),
+                        columns=[{"name": str(i), "id": str(i)} for i in df_sh.columns],
+                        style_cell={
+                            'textAlign': 'left',
+                            'padding': '8px',
+                            'whiteSpace': 'normal',
+                            'height': 'auto'
+                        },
+                        style_header={
+                            'fontWeight': 'bold',
+                            'backgroundColor': brand_colors['Medium violet red'],
+                            'color': 'white',
+                            'textAlign': 'center'
+                        },
+                        style_cell_conditional=[
+                            {'if': {'column_id': 'Organisation Name'}, 'width': '18vw'},
+                            {'if': {'column_id': 'Stakeholder catagorization '}, 'width': '15vw'},
+                            {'if': {'column_id': 'Area of Activity in the food system'}, 'width': '15vw'}
+                        ],
+                        style_data_conditional=[
+                            {'if': {'row_index': 'odd'}, 'backgroundColor': '#f9f9f9'}
+                        ],
+                        fixed_rows={'headers': True},
+                        virtualization=True,
+                        style_table={'height': '80vh', 'overflowY': 'auto'}
+                    )
+                ])
+            ], style={"height": "100%", "padding":"6px" ,"box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
+        ], style={
+            "flex": "1 1 60%",
+            "padding": "10px",
+            "backgroundColor": brand_colors['White'],
+            "display": "flex",
+            "flexDirection": "column"
+        })
+    ], style={"display": "flex", "width": "90vw", "height": "100vh", "backgroundColor": brand_colors['Dark khaki']})
 
-                    ], style={
-                    "flex": "1 1 40%",
-                    "height": "100%", 
-                    "padding": "10px",
-                    "backgroundColor": "#f9f9f9",
-                    "border-radius": "0",
-                    "margin": "0",
-                    #"box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
-                    "display": "flex",
-                    "flexDirection": "column",
-                    "justifyContent": "flex-start",
-                    "overflowY": "auto",
-                    "box-sizing": "border-box",
-                    "zIndex": 2,
-                    "position": "relative",
-                    }),
-            
-                    # Table panel container
-                    html.Div([
-                        dbc.Container([
-                            dash_table.DataTable(
-                                data=df_sh.to_dict('records'), 
-                                columns=[{"name": str(i), "id": str(i)} for i in df_sh.columns],
-                                id='sh_table',
-                                style_cell={
-                                    'textAlign': 'left',
-                                    'padding': '1px',
-                                    'whiteSpace': 'normal',
-                                    'height': 'auto',
-                                    'minWidth': '15vw',
-                                    'width': '15vw',
-                                    'maxWidth': '20vw',
-                                    'overflow': 'hidden',
-                                    'textOverflow': 'ellipsis'
-                                },
-                                style_data={'whiteSpace': 'normal', 'height': 'auto', 'padding':"1px"},
-                                style_header={
-                                    'fontWeight': 'bold', 
-                                    'backgroundColor': brand_colors['Medium violet red'], 
-                                    'color': 'white',
-                                    'textAlign': 'center',
-                                    'padding': '5px'
-                                },
-                                fixed_rows={'headers': True, 'data': 0},
-                                style_table={
-                                    'height': '100%',
-                                    'width': '100%',
-                                    'overflowY': 'scroll',
-                                    'padding':'0',
-                                    'margin':'0',
-                                    'flex': '1 1 auto'
-                                },
-                                virtualization=False
-                            )
-                        ], fluid=True, style={"padding": "10px", "margin": "0", "height": "100%", "width": "100%", "flex": "1 1 auto"})
-                    ], style={
-                        "flex": "1 1 50%",
-                        "height": "100%",
-                        "padding": "0",
-                        "margin": "0",
-                        "backgroundColor": brand_colors['White'],
-                        "border-radius": "0",
-                        "display": "flex",
-                        "alignItems": "stretch",
-                        "justifyContent": "stretch",
-                        "box-sizing": "border-box",
-                        "position": "relative"
-                    }) # End of table panel container
-    ], style={
-        "display": "flex",
-        "width": "90vw",
-        "height": "100vh"
-    })
 
 def affordability_tab_layout():
     return html.Div([html.H1("Dietary Mapping & Affordability - Coming Soon")])
+
+def supply_tab_layout():
+    return html.Div([
+            # KPI Cards (left)
+            html.Div([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H2('Rice Flow Estimations', style={'textAlign': 'center', "padding":"4px"})
+                    ])
+                ], style={"margin-bottom": "10px", "box-shadow": "0 2px 6px rgba(0,0,0,0.1)"}),
+
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H4("Total Flow", className="card-title"),
+                        html.H2(id="kpi-total-flow", className="card-text")
+                    ])
+                ], style=kpi_card_style),
+
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H4("Urban Share", className="card-title"),
+                        html.H2(id="kpi-urban-share", className="card-text"),
+                        dcc.Graph(id="urban-donut", style={"height": "100px"}, config={"displayModeBar": False})
+                    ])
+                ], style=kpi_card_style),
+
+            ], style={
+                "flex": "0 0 20%",  # Changed: Narrow left column for KPI cards
+                "display": "flex",
+                "flexDirection": "column",
+                "padding": "10px"
+            }),
+
+            # Sankey + Slider + Footnote (right)
+            html.Div([
+                dcc.Loading(
+                    type="circle",
+                    children=dcc.Graph(
+                        id="sankey-graph", 
+                        figure=fig_sankey,
+                        style={"width": "100%", "flex": "1 1 auto"}  
+                    )
+                ),
+
+                html.Div([dcc.Slider(
+                    id='slider', min=2010, max=2022, value=2022, step=2,
+                    marks={year: str(year) for year in range(2010,2023,2)},
+                    tooltip={"placement": "bottom", "always_visible": True},
+                    updatemode='mouseup'
+                )], style={"margin-top":"10px"}),
+
+                #dcc.Markdown(
+                #    'Data Source: General Statistics Office of Vietnam (GSO). 2025. Production of paddy by province. Consulted on: June 2025. Link: (https://www.nso.gov.vn/en/agriculture-forestry-and-fishery/). Estimation method: Trade attractiveness method, including two steps as follows: A) Estimation of Rice Net Supply (Consumption – Production) for every province, based on Consumption (Population * Consumption per person), and Production (Paddy production/Live weight/Raw production * Conversion rate). B) Distribute the rice consumption of Hanoi, considering: Province Production, National Production, and International Import.',
+                #    style={'textAlign': 'center', "padding":"10px", "font-style":'italic', 'font-size':'0.5em'}
+                #)
+
+            ], style={
+                "flex": "1 1 70%",  
+                #"height": "100%",
+                "display": "flex",
+                "flexDirection": "column",
+                "padding": "10px",
+                "margin":"10px",
+                "minHeight": 0
+            }),
+
+        ], style={
+                    "display": "flex", 
+                    "width": "90vw", 
+                    "height": "100vh"
+        })
+
+
 
 # ------------------------- Main app layout ------------------------- #
 
@@ -313,7 +474,7 @@ app.layout = html.Div([
                                                 "justifyContent": "flex-start",
                                                 "margin-bottom": "10px",}),
 
-                                dcc.Tabs(id="tabs", value='tab-2-mpi', vertical=True, children=[
+                                dcc.Tabs(id="tabs", value='tab-1-stakeholders', vertical=True, children=[
                                     dcc.Tab(label=tabs_brief[0], value='tab-1-stakeholders', style=tab_style, selected_style=tab_selected_style),
                                     dcc.Tab(label=tabs_brief[1], value='tab-2-mpi', style=tab_style, selected_style=tab_selected_style),
                                     dcc.Tab(label=tabs_brief[2], value='tab-3-affordability', style=tab_style, selected_style=tab_selected_style),
@@ -398,14 +559,15 @@ def update_bar(selected_variable):
 @app.callback(
     Output('map', 'figure'),
     Input('bar-plot', 'clickData'),
-    Input('variable-dropdown', 'value')
+    Input('variable-dropdown', 'value'),
+    prevent_initial_call=True
 )
 def update_map_on_bar_click(clickData, selected_variable):
     center = {
         "lat": MPI.geometry.centroid.y.mean(),
         "lon": MPI.geometry.centroid.x.mean()
     }
-    zoom = 8
+    zoom = 7.75
 
     MPI_display = MPI.copy()
     MPI_display['opacity'] = 0.7
@@ -416,14 +578,16 @@ def update_map_on_bar_click(clickData, selected_variable):
         selected_dist = clickData['points'][0]['y']  # y is Dist_Name for horizontal bar
         match = MPI[MPI['Dist_Name'] == selected_dist]
         if not match.empty:
-            centroid = match.geometry.centroid
+            #centroid = match.geometry.centroid
             center = {
                 "lat": match.geometry.centroid.y.values[0],
                 "lon": match.geometry.centroid.x.values[0]
             }
-            area = match.geometry.area.values[0]
-            zoom = max(8, min(12, 12 - area * 150))  # Zoom in closer
+            #area = match.geometry.area.values[0]
+            #zoom = max(8, min(12, 12 - area * 150))  # Zoom in closer
             # Highlight: set opacity and line_width for the selected district
+
+            zoom = 10
             MPI_display.loc[MPI_display['Dist_Name'] == selected_dist, 'opacity'] = 1
             MPI_display.loc[MPI_display['Dist_Name'] == selected_dist, 'line_width'] = 2
 
@@ -470,7 +634,7 @@ def update_map_on_bar_click(clickData, selected_variable):
     Input('pie-filter-dropdown', 'value'),
     Input('piechart', 'clickData'),
     State('selected_slice', 'data'),
-    prevent_initial_call=False
+    prevent_initial_call=True
 )
 def update_pie(filter_by, clickData, current_selected):
     if filter_by == 'Area':
@@ -489,9 +653,9 @@ def update_pie(filter_by, clickData, current_selected):
         pull = [0.2 if name==new_selected else 0 for name in df_count['name']]
 
     fig = px.pie(df_count, values='count', names='name', hole=0,
-                 color_discrete_sequence=px.colors.sequential.Reds)
+                 color_discrete_sequence=green_pie)
     fig.update_traces(pull=pull, hoverinfo='percent', textinfo='label', textposition='inside', insidetextorientation='radial')
-    fig.update_layout(margin=dict(t=0.25, l=0.25, r=0.25, b=0.25), showlegend=False)
+    fig.update_layout(margin=dict(t=0.1, l=0.1, r=0.1, b=0.1), showlegend=False)
 
     return fig, new_selected
 
@@ -511,6 +675,68 @@ def filter_table(filter_by, selected):
         return df_filtered.to_dict('records')
     else:
         return df_sh.to_dict('records')
+    
+# Update Sankey based on timeslider
+
+@app.callback(
+    [Output("kpi-total-flow", "children"),
+     Output("kpi-urban-share", "children"),
+     Output("urban-donut", "figure"),
+     Output("sankey-graph", "figure")],
+    Input("slider", "value"),
+    prevent_initial_call=False)
+
+def update_sankey(value):
+    df_sankey_filt = df_sankey[df_sankey['Year']==int(value)]
+    flow1 = df_sankey_filt[['province', 'Target', 'Supply to Hanoi']].rename(
+        columns={'province':'source', 'Target':'target', 'Supply to Hanoi':'supply'})
+
+    flow2 = df_sankey_filt[['Target', 'Target_1', 'Rice supply']].rename(
+        columns={'Target':'source', 'Target_1':'target', 'Rice supply':'supply'})
+
+    df_sankey_final = pd.concat([flow1.drop_duplicates(), flow2.groupby(['source','target']).sum().reset_index()], ignore_index=True)
+    labels = list(pd.unique(df_sankey_final[['source','target']].values.ravel('K')))
+
+    # Map sources and targets to indices
+    source_indices = df_sankey_final['source'].apply(lambda x: labels.index(x))
+    target_indices = df_sankey_final['target'].apply(lambda x: labels.index(x))
+    weights = df_sankey_final['supply']
+
+    # Calculating KPIs 
+    total_flow = flow1.drop_duplicates()["supply"].sum()
+    total_flow_text = f"{total_flow:,.0f} tons"
+
+    total = flow2.groupby(['source','target']).sum().reset_index()['supply'].sum()
+    urban_only = flow2.groupby(['source','target']).sum().reset_index().set_index('target').loc['Hanoi urban'].values[1]
+    urban_share = urban_only/total *100
+    urban_share_text = f"{urban_share:.1f}%"
+
+    fig = go.Figure(go.Sankey(
+        node=dict(label=labels, color=node_colors, pad=15, thickness=20),
+        link=dict(source=source_indices, target=target_indices, value=weights, color=link_colors, 
+                  hovertemplate='From %{source.label} → %{target.label}<br>Flow: %{value}<extra></extra>')
+    ))
+
+    fig.update_layout(
+        hovermode='x',
+        font=dict(size=12, color='black'),
+        paper_bgcolor='#ffffff',
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=10, r=10, t=30, b=10), 
+        width=None)
+
+    urban_fig = go.Figure(go.Pie(
+        values=[urban_share, 100-urban_share],
+        hole=0.6,
+        marker=dict(colors=["#206044", "#e9ecef"]),
+        textinfo="none"
+    ))
+    urban_fig.update_layout(showlegend=False, margin=dict(l=0,r=0,t=0,b=0),
+                            paper_bgcolor="rgba(0,0,0,0)",  
+                            plot_bgcolor="rgba(0,0,0,0)")
+
+
+    return total_flow_text, urban_share_text, urban_fig, fig
 
 
 # Linking the tabs to page content loading 
@@ -523,8 +749,8 @@ def render_tab_content(active_tab):
         return poverty_tab_layout()
     elif active_tab == 'tab-1-stakeholders':
         return stakeholders_tab_layout()
-    elif active_tab == 'tab-3-affordability':
-        return affordability_tab_layout()
+    elif active_tab == 'tab-5-supply':
+        return supply_tab_layout()
     else:
         return html.Div([html.H2("Tab not found")])
 
