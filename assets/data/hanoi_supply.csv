@@ -1,0 +1,113 @@
+﻿province,Target,Year,Supply to Hanoi,Target_1,Rice supply
+Central Highlands,Hanoi,2022,2049.93,Hanoi urban,1622.38
+Central Highlands,Hanoi,2020,1576.90,Hanoi urban,1194.72
+Central Highlands,Hanoi,2018,1381.95,Hanoi urban,1055.79
+Central Highlands,Hanoi,2016,393.43,Hanoi urban,289.59
+Central Highlands,Hanoi,2014,506.57,Hanoi urban,390.32
+Central Highlands,Hanoi,2012,91.26,Hanoi urban,69.20
+Central Highlands,Hanoi,2010,0.00,Hanoi urban,0.00
+Central Highlands,Hanoi,2022,2049.93,Hanoi rural,427.55
+Central Highlands,Hanoi,2020,1576.90,Hanoi rural,382.18
+Central Highlands,Hanoi,2018,1381.95,Hanoi rural,326.16
+Central Highlands,Hanoi,2016,393.43,Hanoi rural,103.84
+Central Highlands,Hanoi,2014,506.57,Hanoi rural,116.25
+Central Highlands,Hanoi,2012,91.26,Hanoi rural,22.06
+Central Highlands,Hanoi,2010,0.00,Hanoi rural,0.00
+Hanoi Rural,Hanoi,2022,535181.18,Hanoi urban,423559.40
+Hanoi Rural,Hanoi,2020,546980.45,Hanoi urban,414414.06
+Hanoi Rural,Hanoi,2018,575692.00,Hanoi urban,439821.66
+Hanoi Rural,Hanoi,2016,623450.95,Hanoi urban,458896.98
+Hanoi Rural,Hanoi,2014,660478.19,Hanoi urban,508913.23
+Hanoi Rural,Hanoi,2012,675592.49,Hanoi urban,512294.83
+Hanoi Rural,Hanoi,2010,632159.94,Hanoi urban,473030.02
+Hanoi Rural,Hanoi,2022,535181.18,Hanoi rural,111621.78
+Hanoi Rural,Hanoi,2020,546980.45,Hanoi rural,132566.39
+Hanoi Rural,Hanoi,2018,575692.00,Hanoi rural,135870.34
+Hanoi Rural,Hanoi,2016,623450.95,Hanoi rural,164553.97
+Hanoi Rural,Hanoi,2014,660478.19,Hanoi rural,151564.96
+Hanoi Rural,Hanoi,2012,675592.49,Hanoi rural,163297.66
+Hanoi Rural,Hanoi,2010,632159.94,Hanoi rural,159129.92
+Import,Hanoi,2022,12970.03,Hanoi urban,10264.89
+Import,Hanoi,2020,1819.92,Hanoi urban,1378.84
+Import,Hanoi,2018,2228.16,Hanoi urban,1702.28
+Import,Hanoi,2016,4526.18,Hanoi urban,3331.54
+Import,Hanoi,2014,692.63,Hanoi urban,533.68
+Import,Hanoi,2012,2785.19,Hanoi urban,2111.98
+Import,Hanoi,2010,797.09,Hanoi urban,596.44
+Import,Hanoi,2022,12970.03,Hanoi rural,2705.14
+Import,Hanoi,2020,1819.92,Hanoi rural,441.08
+Import,Hanoi,2018,2228.16,Hanoi rural,525.87
+Import,Hanoi,2016,4526.18,Hanoi rural,1194.64
+Import,Hanoi,2014,692.63,Hanoi rural,158.94
+Import,Hanoi,2012,2785.19,Hanoi rural,673.21
+Import,Hanoi,2010,797.09,Hanoi rural,200.65
+Mekong River delta,Hanoi,2022,63049.99,Hanoi urban,49899.77
+Mekong River delta,Hanoi,2020,84208.21,Hanoi urban,63799.48
+Mekong River delta,Hanoi,2018,79635.53,Hanoi urban,60840.57
+Mekong River delta,Hanoi,2016,63394.50,Hanoi urban,46662.12
+Mekong River delta,Hanoi,2014,53816.73,Hanoi urban,41467.00
+Mekong River delta,Hanoi,2012,56974.26,Hanoi urban,43203.00
+Mekong River delta,Hanoi,2010,48718.18,Hanoi urban,36454.63
+Mekong River delta,Hanoi,2022,63049.99,Hanoi rural,13150.22
+Mekong River delta,Hanoi,2020,84208.21,Hanoi rural,20408.73
+Mekong River delta,Hanoi,2018,79635.53,Hanoi rural,18794.96
+Mekong River delta,Hanoi,2016,63394.50,Hanoi rural,16732.38
+Mekong River delta,Hanoi,2014,53816.73,Hanoi rural,12349.74
+Mekong River delta,Hanoi,2012,56974.26,Hanoi rural,13771.27
+Mekong River delta,Hanoi,2010,48718.18,Hanoi rural,12263.54
+North Central and Central coastal areas,Hanoi,2022,37330.14,Hanoi urban,29544.26
+North Central and Central coastal areas,Hanoi,2020,40854.54,Hanoi urban,30953.02
+North Central and Central coastal areas,Hanoi,2018,43463.98,Hanoi urban,33205.95
+North Central and Central coastal areas,Hanoi,2016,34242.59,Hanoi urban,25204.58
+North Central and Central coastal areas,Hanoi,2014,29811.48,Hanoi urban,22970.41
+North Central and Central coastal areas,Hanoi,2012,27961.61,Hanoi urban,21203.00
+North Central and Central coastal areas,Hanoi,2010,22868.39,Hanoi urban,17111.86
+North Central and Central coastal areas,Hanoi,2022,37330.14,Hanoi rural,7785.88
+North Central and Central coastal areas,Hanoi,2020,40854.54,Hanoi rural,9901.52
+North Central and Central coastal areas,Hanoi,2018,43463.98,Hanoi rural,10258.03
+North Central and Central coastal areas,Hanoi,2016,34242.59,Hanoi rural,9038.01
+North Central and Central coastal areas,Hanoi,2014,29811.48,Hanoi rural,6841.07
+North Central and Central coastal areas,Hanoi,2012,27961.61,Hanoi rural,6758.61
+North Central and Central coastal areas,Hanoi,2010,22868.39,Hanoi rural,5756.53
+Northern midlands and mountain areas,Hanoi,2022,39324.71,Hanoi urban,31122.82
+Northern midlands and mountain areas,Hanoi,2020,32133.36,Hanoi urban,24345.51
+Northern midlands and mountain areas,Hanoi,2018,28472.68,Hanoi urban,21752.78
+Northern midlands and mountain areas,Hanoi,2016,13697.17,Hanoi urban,10081.93
+Northern midlands and mountain areas,Hanoi,2014,16662.81,Hanoi urban,12839.07
+Northern midlands and mountain areas,Hanoi,2012,14880.74,Hanoi urban,11283.91
+Northern midlands and mountain areas,Hanoi,2010,11178.24,Hanoi urban,8364.41
+Northern midlands and mountain areas,Hanoi,2022,39324.71,Hanoi rural,8201.88
+Northern midlands and mountain areas,Hanoi,2020,32133.36,Hanoi rural,7787.85
+Northern midlands and mountain areas,Hanoi,2018,28472.68,Hanoi rural,6719.90
+Northern midlands and mountain areas,Hanoi,2016,13697.17,Hanoi rural,3615.24
+Northern midlands and mountain areas,Hanoi,2014,16662.81,Hanoi rural,3823.74
+Northern midlands and mountain areas,Hanoi,2012,14880.74,Hanoi rural,3596.83
+Northern midlands and mountain areas,Hanoi,2010,11178.24,Hanoi rural,2813.83
+Red river delta,Hanoi,2022,184747.35,Hanoi urban,146214.93
+Red river delta,Hanoi,2020,238821.36,Hanoi urban,180940.53
+Red river delta,Hanoi,2018,233356.20,Hanoi urban,178281.29
+Red river delta,Hanoi,2016,209937.44,Hanoi urban,154526.44
+Red river delta,Hanoi,2014,179724.77,Hanoi urban,138481.96
+Red river delta,Hanoi,2012,198986.35,Hanoi urban,150889.30
+Red river delta,Hanoi,2010,201711.48,Hanoi urban,150935.84
+Red river delta,Hanoi,2022,184747.35,Hanoi rural,38532.42
+Red river delta,Hanoi,2020,238821.36,Hanoi rural,57880.84
+Red river delta,Hanoi,2018,233356.20,Hanoi rural,55074.91
+Red river delta,Hanoi,2016,209937.44,Hanoi rural,55411.00
+Red river delta,Hanoi,2014,179724.77,Hanoi rural,41242.81
+Red river delta,Hanoi,2012,198986.35,Hanoi rural,48097.05
+Red river delta,Hanoi,2010,201711.48,Hanoi rural,50775.65
+South East,Hanoi,2022,2325.79,Hanoi urban,1840.70
+South East,Hanoi,2020,2874.57,Hanoi urban,2177.89
+South East,Hanoi,2018,2786.68,Hanoi urban,2128.99
+South East,Hanoi,2016,2066.55,Hanoi urban,1521.11
+South East,Hanoi,2014,1656.67,Hanoi urban,1276.50
+South East,Hanoi,2012,1949.40,Hanoi urban,1478.21
+South East,Hanoi,2010,1852.79,Hanoi urban,1386.40
+South East,Hanoi,2022,2325.79,Hanoi rural,485.09
+South East,Hanoi,2020,2874.57,Hanoi rural,696.68
+South East,Hanoi,2018,2786.68,Hanoi rural,657.69
+South East,Hanoi,2016,2066.55,Hanoi rural,545.45
+South East,Hanoi,2014,1656.67,Hanoi rural,380.17
+South East,Hanoi,2012,1949.40,Hanoi rural,471.19
+South East,Hanoi,2010,1852.79,Hanoi rural,466.39

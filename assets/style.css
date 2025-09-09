@@ -3,3 +3,12 @@
 body, * {
     font-family: 'AbeeZee', Arial, sans-serif !important;
 }
+
+.nav-link, .nav-link:visited, .nav-link:active {
+    color: #313715 !important; /* Use your brand brown */
+    text-decoration: none !important;
+}
+.nav-link:hover, .nav-link:focus {
+    color: #ffffff !important; /* Optional: highlight color on hover */
+    text-decoration: none !important;
+}
