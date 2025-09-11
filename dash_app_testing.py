@@ -93,22 +93,19 @@ plotting_palette_cat = [
 ]
 
 tabs = [
-        'Food Systems Stakeholders',
-        'Multidimensional Poverty',
-        'Dietry Mapping & Affordability',
-        'Health & Nutrition',
-        'Food Flows, Supply & Value Chain',
-        'Climate Shocks and Resilience'
+        'Food systems stakeholders',                #Populated
+        'Food flows, supply & value chains',        #Populated
+        'Sustainability Metrics & Indicators',      #Currently empty
+        'Multidimensional Poverty',                 #Populated
+        'Resilience to food system shocks',         #In progress
+        'Dietary mapping & affordability',          #Semi-Populated (In development)
+        'Food losses & waste',                      #Currently empty
+        'Food system policies',                     #Currently empty
+        'Health & nutrition',                       #Populated
+        'Environmental footprints of food & diets', #Currently empty 
+        'Behaviour change tool (AI Chatbot & Game)' #Currently empty (In development)
         ]
 
-tabs_brief = [
-        'Stakeholders',
-        'Poverty',
-        'Affordability',
-        'Nutrition',
-        'Supply',
-        'Shocks'        
-]
 
 # -------------------------- Loading and Formatting All Data ------------------------- #
 
@@ -131,6 +128,10 @@ df_sankey = pd.read_csv(path+'/hanoi_supply.csv')
 
 # Loading affordability data
 df_affordability =  pd.read_csv(path+'/hanoi_affordability_cleaned.csv')
+
+# Loading dietary data
+df_diet = pd.read_csv(path+'/hanoi_health_nutrition_cleaned.csv')
+df_diet_2 = pd.read_csv(path+'hanoi_health_nutrition_cleaned_2.csv')
 
 # ------------------------- Preloading Figures ------------------------- #
 # Adding MPI Choropleth to the map
@@ -481,125 +482,6 @@ app.layout = html.Div([
 
 # ------------------------- Defining tab layouts ------------------------- #
 
-def poverty_tab_layout():
-    return html.Div([
-
-        html.Div([sidebar], style={
-                                        "width": "15%",
-                                        "height": "100%",
-                                        "display": "flex",
-                                        "vertical-align":'top',
-                                        "flexDirection": "column",
-                                        "justifyContent": "flex-start",}), # End of sidebar div
-
-        # Left Panel: text, dropdown, bar chart
-        html.Div([
-                # Card 1: Header and text
-                dbc.Card([
-                    dbc.CardBody([
-                        html.H2("Multidimensional Poverty", style=header_style),
-                        #html.P(str(lorem.words(30)), style={"padding": "0", "textAlign": "justify"}),
-                                ])
-                        ], style={"height": "auto", 
-                                  "padding":"1px" ,
-                                  "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
-                                  "backgroundColor": brand_colors['Mid green'],
-                                  "margin-bottom": "15px",
-                                  "border-radius": "10px",
-                                  "justifyContent": "center"
-                                  }),
-
-                # Card 2: Filter
-                dbc.Card([
-                    dbc.CardBody([
-                        html.P('Please select a variable from the dropdown menu:',
-                               style={'margin':'10px'}),
-                        dcc.Dropdown(
-                            id='variable-dropdown',
-                            options=[{'label': v, 'value': v} for v in variables],
-                        value=variables[0],
-                        style={"margin-bottom": "20px"}),
-                                ])
-                        ], style={#"height": "100%", 
-                                  "padding":"6px" ,
-                                  "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
-                                  'margin-bottom': '15px',
-                                  "backgroundColor": brand_colors['White'],
-                                  "border-radius": "10px"
-                                  }),
-
-
-                # Card 3: Barplot
-                dbc.Card([
-                    dbc.CardBody([
-                        dcc.Graph(id='bar-plot',
-                                style={
-                                "flex": "1 1 auto",
-                                "height":"98%",
-                                'padding': '4px',
-                                'margin': '0',
-                                "border-radius": "8px",
-                                "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
-                                })
-                                ],style={
-                                            "display": "flex",
-                                            "flexDirection": "column",
-                                            "height": "100%"             
-                                        })
-                        ], style={"height": "100%", 
-                                  "padding":"6px" ,
-                                  "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
-                                  "backgroundColor": brand_colors['White'],
-                                  "border-radius": "10px"}),
-
-                    ], style={
-                        "width": "min(50%)",
-                        "height": "100%",
-                        "padding": "10px",
-                        "backgroundColor": brand_colors['Light green'],
-                        "border-radius": "0",
-                        "margin": "0",
-                        #"box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
-                        "display": "flex",
-                        "flexDirection": "column",
-                        "justifyContent": "flex-start",
-                        "overflowY": "auto",
-                        "box-sizing": "border-box",
-                        "zIndex": 2,
-                        "position": "relative",
-                    }),
-
-        # Right panel: map, full height
-        html.Div([
-            dcc.Graph(
-                id='map',
-                figure=fig_ch,
-                style={"height": "100%",
-                       "width": "100%",  # fill the parent div
-                       "padding": "0",
-                       "margin": "0"})
-        ], style={
-            "flex": "1",
-            "height": "100%",
-            "padding": "0",
-            "margin": "0",
-            "backgroundColor": brand_colors['White'],
-            "border-radius": "0",
-            "display": "flex",
-            "alignItems": "stretch",
-            "justifyContent": "center",
-            "box-sizing": "border-box",
-            "zIndex": 1000,
-            "position": "relative",
-        })
-
-    ], style={
-        "display": "flex",
-        "width": "100vw",
-        "height": "100%"
-    })
-
-
 def stakeholders_tab_layout():
     return html.Div([
 
@@ -763,114 +645,6 @@ def stakeholders_tab_layout():
               "backgroundColor": brand_colors['Light green']})
 
 
-def affordability_tab_layout():
-    return html.Div([
-            html.Div([sidebar], style={
-                                "width": "15%",
-                                "height": "100%",
-                                "display": "flex",
-                                "vertical-align":'top',
-                                "flexDirection": "column",
-                                "justifyContent": "flex-start",}), # End of sidebar div
-
-            # Left Panel
-            html.Div([
-                dbc.Card([
-                    dbc.CardBody([
-                        html.H2('Dietry Mapping & Affordability', 
-                                style=header_style),
-                    ])
-                ], style={"height": "auto",
-                          "width":"100%",
-                          "padding":"1px" ,
-                          "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
-                          "backgroundColor": brand_colors['Mid green'],
-                          "border-radius": "10px",
-                          'margin':"0px 0px 10px 0px",
-                          "justifyContent": "center"
-                                  }),
-
-            dbc.Card([
-                dbc.CardBody([
-                    html.Div([
-                    #html.P("Show Trend for:", 
-                    #        style={     "margin": "0 0 4px 0", 
-                    #                    'fontSize': 'clamp(0.7em, 0.8em, 1.2em)',
-                    #                    "whiteSpace": "nowrap"
-                    #                    }),
-                                        
-                    dcc.Dropdown(
-                        id='affordability-filter-dropdown',
-                        options=[
-                            {'label': 'Food Expenditure from Total Expenses', 'value': 'foodExp_totalExp'},
-                            {'label': 'Food Expenditure from Household Income', 'value': 'foodExp_totalInc'},
-                            {'label': 'Rice Expenditure from Household Income', 'value': 'riceExp_House'},
-                            {'label': 'Rice Affordability', 'value': 'riceAfford'},
-                        ],
-                        value='riceAfford',
-                        clearable=False,
-                        style={"margin-bottom": "0", 
-                                'fontSize': 'clamp(0.8em, 1em, 1.4em)',
-                                'width':'100%'}
-                    )
-                    ], style={  "display":'flex',
-                                "flexDirection":'column',
-                                'width':'100%'})
-                ])
-            ], style={  "height": "auto", 
-                        "padding":"2px" ,
-                        "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
-                        'margin-bottom': '15px',
-                        "backgroundColor": brand_colors['White'],
-                        "border-radius": "10px"
-                        }),
-
-            dbc.Card([
-                dbc.CardBody([
-                    dcc.Graph(id='affordability-trend', 
-                              style={
-                                "flex": "1 1 auto",
-                                "height":"98%",
-                                'padding': '4px',
-                                'margin': '0',
-                                "border-radius": "8px",
-                                "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
-                                })
-                ],style={
-                        "display": "flex",
-                        "flexDirection": "column",
-                        "height": "100%"             
-                    })
-            ], style={"height": "100%", 
-                        "padding":"2px" ,
-                        "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
-                        "backgroundColor": brand_colors['White'],
-                        "border-radius": "10px"})
-
-            ], style={
-                        "width": "min(50%)",
-                        "height": "100%",
-                        "padding": "10px",
-                        "backgroundColor": brand_colors['Light green'],
-                        "border-radius": "0",
-                        "margin": "0",
-                        "box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
-                        "display": "flex",
-                        "flexDirection": "column",
-                        "justifyContent": "flex-start",
-                        "overflowY": "auto",
-                        "box-sizing": "border-box",
-                        "position": "relative",
-                    }),
-
-
-        ], style={
-                    "display": "flex", 
-                    "width": "100%", 
-                    "height": "100%",
-                    "backgroundColor": brand_colors['Light green']
-        })
-
 def supply_tab_layout():
     return html.Div([
 
@@ -1013,6 +787,384 @@ def supply_tab_layout():
                 "marginBottom": "auto" 
             }),
         ], style={
+                    "display": "flex", 
+                    "width": "100%", 
+                    "height": "100%",
+                    "backgroundColor": brand_colors['Light green']
+        })
+
+
+
+def poverty_tab_layout():
+    return html.Div([
+
+        html.Div([sidebar], style={
+                                        "width": "15%",
+                                        "height": "100%",
+                                        "display": "flex",
+                                        "vertical-align":'top',
+                                        "flexDirection": "column",
+                                        "justifyContent": "flex-start",}), # End of sidebar div
+
+        # Left Panel: text, dropdown, bar chart
+        html.Div([
+                # Card 1: Header and text
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H2("Multidimensional Poverty", style=header_style),
+                        #html.P(str(lorem.words(30)), style={"padding": "0", "textAlign": "justify"}),
+                                ])
+                        ], style={"height": "auto", 
+                                  "padding":"1px" ,
+                                  "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                                  "backgroundColor": brand_colors['Mid green'],
+                                  "margin-bottom": "15px",
+                                  "border-radius": "10px",
+                                  "justifyContent": "center"
+                                  }),
+
+                # Card 2: Filter
+                dbc.Card([
+                    dbc.CardBody([
+                        html.P('Please select a variable from the dropdown menu:',
+                               style={'margin':'10px'}),
+                        dcc.Dropdown(
+                            id='variable-dropdown',
+                            options=[{'label': v, 'value': v} for v in variables],
+                        value=variables[0],
+                        style={"margin-bottom": "20px"}),
+                                ])
+                        ], style={#"height": "100%", 
+                                  "padding":"6px" ,
+                                  "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                                  'margin-bottom': '15px',
+                                  "backgroundColor": brand_colors['White'],
+                                  "border-radius": "10px"
+                                  }),
+
+
+                # Card 3: Barplot
+                dbc.Card([
+                    dbc.CardBody([
+                        dcc.Graph(id='bar-plot',
+                                style={
+                                "flex": "1 1 auto",
+                                "height":"98%",
+                                'padding': '4px',
+                                'margin': '0',
+                                "border-radius": "8px",
+                                "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
+                                })
+                                ],style={
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "height": "100%"             
+                                        })
+                        ], style={"height": "100%", 
+                                  "padding":"6px" ,
+                                  "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                                  "backgroundColor": brand_colors['White'],
+                                  "border-radius": "10px"}),
+
+                    ], style={
+                        "width": "min(50%)",
+                        "height": "100%",
+                        "padding": "10px",
+                        "backgroundColor": brand_colors['Light green'],
+                        "border-radius": "0",
+                        "margin": "0",
+                        #"box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "justifyContent": "flex-start",
+                        "overflowY": "auto",
+                        "box-sizing": "border-box",
+                        "zIndex": 2,
+                        "position": "relative",
+                    }),
+
+        # Right panel: map, full height
+        html.Div([
+            dcc.Graph(
+                id='map',
+                figure=fig_ch,
+                style={"height": "100%",
+                       "width": "100%",  # fill the parent div
+                       "padding": "0",
+                       "margin": "0"})
+        ], style={
+            "flex": "1",
+            "height": "100%",
+            "padding": "0",
+            "margin": "0",
+            "backgroundColor": brand_colors['White'],
+            "border-radius": "0",
+            "display": "flex",
+            "alignItems": "stretch",
+            "justifyContent": "center",
+            "box-sizing": "border-box",
+            "zIndex": 1000,
+            "position": "relative",
+        })
+
+    ], style={
+        "display": "flex",
+        "width": "100vw",
+        "height": "100%"
+    })
+
+
+def affordability_tab_layout():
+    return html.Div([
+            html.Div([sidebar], style={
+                                "width": "15%",
+                                "height": "100%",
+                                "display": "flex",
+                                "vertical-align":'top',
+                                "flexDirection": "column",
+                                "justifyContent": "flex-start",
+            }), # End of sidebar div
+
+            # Left Panel
+            html.Div([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H2('Dietry Mapping & Affordability', 
+                                style=header_style),
+                    ])
+                ], style={"height": "auto",
+                          "width":"100%",
+                          "padding":"1px" ,
+                          "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                          "backgroundColor": brand_colors['Mid green'],
+                          "border-radius": "10px",
+                          'margin':"0px 0px 10px 0px",
+                          "justifyContent": "center"
+                }),
+                
+                html.Div([
+                    dbc.Card([
+                        dbc.CardBody([         
+                            dcc.Dropdown(
+                                id='affordability-filter-dropdown',
+                                options=[
+                                    {'label': 'Food Expenditure from Total Expenses', 'value': 'foodExp_totalExp'},
+                                    {'label': 'Food Expenditure from Household Income', 'value': 'foodExp_totalInc'},
+                                    {'label': 'Rice Expenditure from Household Income', 'value': 'riceExp_House'},
+                                    {'label': 'Rice Affordability', 'value': 'riceAfford'},
+                                ],
+                                value='riceAfford',
+                                clearable=False,
+                                style={"margin-bottom": "0", 
+                                        'fontSize': 'clamp(0.8em, 1em, 1.4em)',
+                                        'width':'100%'
+                            })
+                        ], style={  "display":'flex',
+                                    "flexDirection":'column',
+                                    'width':'100%'
+                        })
+                    ])
+                ], style={  "height": "auto", 
+                            "padding":"2px" ,
+                            "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                            'margin-bottom': '15px',
+                            "backgroundColor": brand_colors['White'],
+                            "border-radius": "10px"
+            }),
+
+                dbc.Card([
+                    dbc.CardBody([
+                        dcc.Graph(id='affordability-trend', 
+                                style={
+                                    "flex": "1 1 auto",
+                                    "height":"98%",
+                                    'padding': '4px',
+                                    'margin': '0',
+                                    "border-radius": "8px",
+                                    "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
+                                })
+                    ],style={
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "height": "100%"             
+                    })
+                ], style={"height": "100%", 
+                            "padding":"2px" ,
+                            "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                            "backgroundColor": brand_colors['White'],
+                            "border-radius": "10px"
+                })
+
+            ], style={
+                    "width": "min(50%)",
+                    "height": "100%",
+                    "padding": "10px",
+                    "backgroundColor": brand_colors['Light green'],
+                    "border-radius": "0",
+                    "margin": "0",
+                    "box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "justifyContent": "flex-start",
+                    "overflowY": "auto",
+                    "box-sizing": "border-box",
+                    "position": "relative",
+                }), # End of left panel
+
+
+        ], style={
+                    "display": "flex", 
+                    "width": "100%", 
+                    "height": "100%",
+                    "backgroundColor": brand_colors['Light green']
+        })
+
+def diet_nutrition_layout():
+    labels = df_diet_2['Cat'].unique()
+    return html.Div([
+                # sidebar container
+                html.Div([sidebar], style={
+                        "width": "15%",
+                        "height": "100%",
+                        "display": "flex",
+                        "vertical-align":'top',
+                        "flexDirection": "column",
+                        "justifyContent": "flex-start",}), # End of sidebar div
+
+
+                # Left panel container
+                html.Div([
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.H2('Health & Nutrition', 
+                                    style=header_style),
+                        ])
+                    ], style={"height": "auto",
+                            "width":"100%",
+                            "padding":"1px" ,
+                            "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                            "backgroundColor": brand_colors['Mid green'],
+                            "border-radius": "10px",
+                            'margin':"0px 0px 10px 0px",
+                            "justifyContent": "center"
+                    }),
+
+                    html.Div([
+                        dbc.Card([
+                            dbc.CardBody([
+                                dcc.Dropdown(
+                                    id='health-filter-dropdown',
+                                    options=[
+                                        {'label': labels[i], 'value': labels[i]} for i in range(len(labels))
+                                    ],
+                                    value=labels[0],
+                                    clearable=False,
+                                    style={"margin-bottom": "0", 
+                                            'fontSize': 'clamp(0.8em, 1em, 1.4em)',
+                                            'width':'100%'
+                                })
+                            ], style={  "display":'flex',
+                                                "flexDirection":'column',
+                                                'width':'100%'
+                            })
+                        ])
+                    ], style={  "height": "auto", 
+                                "padding":"2px" ,
+                                "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                                'margin-bottom': '15px',
+                                "backgroundColor": brand_colors['White'],
+                                "border-radius": "10px"
+                    }),
+
+                    dbc.Card([
+                        dbc.CardBody([
+                            dcc.Graph(id='health-trend', 
+                                    style={
+                                        "flex": "1 1 auto",
+                                        "height":"98%",
+                                        'padding': '4px',
+                                        'margin': '0',
+                                        "border-radius": "8px",
+                                        "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
+                                    })
+                        ],style={
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "height": "100%"             
+                        })
+                    ], style={"height": "100%", 
+                                "padding":"2px" ,
+                                "box-shadow": "0 2px 6px rgba(0,0,0,0.1)",
+                                "backgroundColor": brand_colors['White'],
+                                "border-radius": "10px"
+                    })
+
+                ], style={
+                            "width": "min(35%)",
+                            "height": "100%",
+                            "padding": "10px",
+                            "backgroundColor": brand_colors['Light green'],
+                            "border-radius": "0",
+                            "margin": "0",
+                            "box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "justifyContent": "flex-start",
+                            "overflowY": "auto",
+                            "box-sizing": "border-box",
+                            "position": "relative",
+                }), # End of left panel
+
+                # Right panel container
+                html.Div([
+                    dbc.Card([
+                        dbc.CardBody([
+                            dcc.Graph(id='diet-dumbell', style={
+                            "flex": "1 1 90vh",
+                            "height":"82vh",
+                            'padding': '2px',
+                            'margin': '0',
+                            "border-radius": "8px",
+                            "box-shadow": "0 2px 8px rgba(0,0,0,0.15)",
+                            }),
+
+                            html.Div([dcc.Slider(
+                                                    id='dumbell-slider', min=2010, max=2023, value=2013, step=2,
+                                                    marks={year: str(year) for year in range(2010,2023,1)},
+                                                    tooltip={"placement": "bottom", "always_visible": True},
+                                                    updatemode='mouseup'
+                                                    )
+                                                ], style={  "margin-top":"8px", 
+                                                            "color":brand_colors['Brown'],
+                                                            "width": "100%", 
+                                                            "height":"auto",
+                                                            "flex": "0 0 auto",
+                                                            'marginBottom': '4px'
+                                                        })
+                        ], style={
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "height": "100%",
+                                "justifyContent": "flex-start"
+                            })
+                    ])
+                ], style={
+                    "width": "min(50%)",
+                    "height": "100%",
+                    "padding": "10px",
+                    "backgroundColor": brand_colors['Light green'],
+                    "border-radius": "0",
+                    "margin": "0",
+                    "box-shadow": "0 2px 8px rgba(0,0,0,0.05)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "justifyContent": "flex-start",
+                    "overflowY": "auto",
+                    "box-sizing": "border-box",
+                    "position": "relative",
+                })
+    
+            ], style={
                     "display": "flex", 
                     "width": "100%", 
                     "height": "100%",
@@ -1256,7 +1408,7 @@ def update_sankey(value):
     Input('affordability-filter-dropdown','value')
 )
 
-def update_affordability(selected_variable):
+def update_affordability_trend(selected_variable):
 
     titles = {
         'foodExp_totalExp': 'Food Expenditure from Total Expenses (%)',
@@ -1269,7 +1421,7 @@ def update_affordability(selected_variable):
         'foodExp_totalExp': '%',
         'foodExp_totalInc': '%',
         'riceExp_House': '%',
-        'riceAfford': None
+        'riceAfford': '%'
     }
 
     df_filt = df_affordability[df_affordability['Cat']==selected_variable]
@@ -1286,7 +1438,7 @@ def update_affordability(selected_variable):
     
     fig.update_traces(marker=dict(size=8))
     fig.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=0.25, r=0, t=0, b=0.25),
         hoverlabel=dict(bgcolor="white", font_color="black"),
         legend=dict(
             title=None,
@@ -1300,6 +1452,145 @@ def update_affordability(selected_variable):
     )
     fig.update_xaxes(title_text=None)  
     fig.update_yaxes(title_text=y_labels[selected_variable]) #titles[selected_variable])  
+    return fig
+
+
+@app.callback(
+    Output('health-trend','figure'),
+    Input('health-filter-dropdown','value')
+)
+
+def update_health_trend(selected_variable):
+    df_filt = df_diet_2[df_diet_2['Cat']==selected_variable]
+
+    fig = px.line(df_filt, 
+                  x='Year', 
+                  y='value', 
+                  color='Reg', 
+                  markers=True,
+                  labels={selected_variable: selected_variable, 'Year':'Year'},
+                  color_discrete_sequence=[brand_colors['Red'], brand_colors['Dark green']],
+                  #title=titles[selected_variable]
+                  )
+    
+    fig.update_traces(marker=dict(size=8))
+    fig.update_layout(
+        margin=dict(l=0.25, r=0, t=0, b=0.25),
+        hoverlabel=dict(bgcolor="white", font_color="black"),
+        legend=dict(
+            title=None,
+            x=1.1, y=1.1,
+            xanchor='right', yanchor='top',
+            bgcolor='rgba(255,255,255,0.7)',
+            bordercolor='rgba(0,0,0,0.1)',
+            borderwidth=1,
+            font=dict(size=12)
+        )
+    )
+
+    fig.update_xaxes(title_text=None)  
+    fig.update_yaxes(title_text=selected_variable) #titles[selected_variable])  
+    return fig
+
+
+@app.callback(Output('diet-dumbell', 'figure'),
+              Input('dumbell-slider', 'value'))
+
+def update_diet_dumbell(year_start):
+    categories = df_diet['Cat'].unique()
+  
+    line_x, line_y, x_2013, x_2023, y_labels = [], [], [], [], []
+
+    for cat in categories:
+        val_2013 = df_diet.loc[(df_diet.Year == year_start) & (df_diet.Cat == cat), "value"].values[0]
+        val_2023 = df_diet.loc[(df_diet.Year == 2023) & (df_diet.Cat == cat), "value"].values[0]
+        line_x.extend([val_2013, val_2023, None])
+        line_y.extend([cat, cat, None])
+        x_2013.append(val_2013)
+        x_2023.append(val_2023)
+        y_labels.append(cat)
+
+    fig = go.Figure()
+
+    # Line connecting 2013 and 2023
+    fig.add_trace(go.Scatter(
+        x=line_x,
+        y=line_y,
+        mode="lines",
+        line=dict(color="grey"),
+        showlegend=False
+    ))
+
+    # 2013 markers
+    fig.add_trace(go.Scatter(
+        x=x_2013,
+        y=y_labels,
+        mode="markers",
+        name=str(year_start),
+        marker=dict(
+                    color=brand_colors['Red'],
+                    size=8,
+                    symbol="circle",
+                    line=dict(
+                        color=brand_colors['Brown'],  # outline color
+                        width=2                      # outline thickness
+                    )
+                )
+    ))
+
+    # 2023 markers
+    fig.add_trace(go.Scatter(
+        x=x_2023,
+        y=y_labels,
+        mode="markers",
+        name="2023",
+        marker=dict(
+                    color=brand_colors['Light green'],
+                    size=8,
+                    symbol="circle",
+                    line=dict(
+                        color=brand_colors['Brown'],  # outline color
+                        width=2                      # outline thickness
+                    )
+                )
+    ))
+
+    # Optional: Add arrows as annotations for direction
+    for x0, x1, y in zip(x_2013, x_2023, y_labels):
+        if pd.notnull(x0) and pd.notnull(x1):
+            fig.add_annotation(
+                x=x1, y=y,
+                ax=x0, ay=y,
+                xref="x", yref="y",
+                axref="x", ayref="y",
+                showarrow=True,
+                arrowhead=3,
+                arrowsize=1,
+                arrowwidth=2,
+                arrowcolor=brand_colors['Brown'],
+            )
+
+    fig.update_layout(
+    yaxis=dict(
+        tickfont=dict(size=12),
+        automargin=True,
+        ticklabelposition="outside right",
+        showgrid=True,                # Show horizontal grid lines
+        gridcolor='#949494',  
+        gridwidth=0.7                  
+    ),
+    xaxis=dict(
+        showgrid=True,               
+        gridcolor="#949494",
+        gridwidth=0.7
+    ),
+    margin=dict(l=120, r=20, t=40, b=20),
+    paper_bgcolor=brand_colors['White'],
+    plot_bgcolor=brand_colors['White'],
+    #title_text="Health and Nutrition trends from selected year to 2023", 
+    #title_x=0.5
+    )
+
     return fig
 
 # Linking the tabs to page content loading 
@@ -1336,7 +1627,10 @@ def render_tab_content(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12):
     
     elif tab_id == "tab-7-affordability":
         return affordability_tab_layout()
-    
+
+    elif tab_id == "tab-10-nutrition":
+        return diet_nutrition_layout()
+
     else:
         return html.Div([html.H2("Coming soon...")])
 

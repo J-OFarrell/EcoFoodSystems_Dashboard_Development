@@ -1,0 +1,141 @@
+Year,Cat,value,Reg
+2010,Underweight in children under 5 years,10.8,Hanoi
+2011,Underweight in children under 5 years,8.6,Hanoi
+2012,Underweight in children under 5 years,8.1,Hanoi
+2013,Underweight in children under 5 years,7.0,Hanoi
+2014,Underweight in children under 5 years,6.1,Hanoi
+2015,Underweight in children under 5 years,5.9,Hanoi
+2016,Underweight in children under 5 years,5.7,Hanoi
+2017,Underweight in children under 5 years,,Hanoi
+2018,Underweight in children under 5 years,5.5,Hanoi
+2019,Underweight in children under 5 years,5.2,Hanoi
+2020,Underweight in children under 5 years,4.9,Hanoi
+2021,Underweight in children under 5 years,,Hanoi
+2022,Underweight in children under 5 years,6.7,Hanoi
+2023,Underweight in children under 5 years,6.9,Hanoi
+2010,Underweight in children under 5 years,17.5,Vietnam
+2011,Underweight in children under 5 years,16.8,Vietnam
+2012,Underweight in children under 5 years,16.2,Vietnam
+2013,Underweight in children under 5 years,15.3,Vietnam
+2014,Underweight in children under 5 years,14.5,Vietnam
+2015,Underweight in children under 5 years,14.1,Vietnam
+2016,Underweight in children under 5 years,13.8,Vietnam
+2017,Underweight in children under 5 years,13.4,Vietnam
+2018,Underweight in children under 5 years,12.8,Vietnam
+2019,Underweight in children under 5 years,12.2,Vietnam
+2020,Underweight in children under 5 years,11.6,Vietnam
+2021,Underweight in children under 5 years,,Vietnam
+2022,Underweight in children under 5 years,10.2,Vietnam
+2023,Underweight in children under 5 years,9.7,Vietnam
+2010,Wasting in children under 5 years,4.8,Hanoi
+2011,Wasting in children under 5 years,2.9,Hanoi
+2012,Wasting in children under 5 years,3.3,Hanoi
+2013,Wasting in children under 5 years,2.8,Hanoi
+2014,Wasting in children under 5 years,5.8,Hanoi
+2015,Wasting in children under 5 years,3.8,Hanoi
+2016,Wasting in children under 5 years,,Hanoi
+2017,Wasting in children under 5 years,,Hanoi
+2018,Wasting in children under 5 years,3.7,Hanoi
+2019,Wasting in children under 5 years,3.2,Hanoi
+2020,Wasting in children under 5 years,2.7,Hanoi
+2021,Wasting in children under 5 years,3.2,Hanoi
+2022,Wasting in children under 5 years,3.2,Hanoi
+2023,Wasting in children under 5 years,6.9,Hanoi
+2010,Wasting in children under 5 years,7.1,Vietnam
+2011,Wasting in children under 5 years,6.6,Vietnam
+2012,Wasting in children under 5 years,6.7,Vietnam
+2013,Wasting in children under 5 years,6.6,Vietnam
+2014,Wasting in children under 5 years,6.8,Vietnam
+2015,Wasting in children under 5 years,6.4,Vietnam
+2016,Wasting in children under 5 years,,Vietnam
+2017,Wasting in children under 5 years,5.8,Vietnam
+2018,Wasting in children under 5 years,5.4,Vietnam
+2019,Wasting in children under 5 years,5.2,Vietnam
+2020,Wasting in children under 5 years,4.7,Vietnam
+2021,Wasting in children under 5 years,,Vietnam
+2022,Wasting in children under 5 years,4.4,Vietnam
+2023,Wasting in children under 5 years,4.4,Vietnam
+2010,Stunting in children under 5 years,10.8,Hanoi
+2011,Stunting in children under 5 years,8.6,Hanoi
+2012,Stunting in children under 5 years,8.1,Hanoi
+2013,Stunting in children under 5 years,7.0,Hanoi
+2014,Stunting in children under 5 years,6.1,Hanoi
+2015,Stunting in children under 5 years,5.9,Hanoi
+2016,Stunting in children under 5 years,5.7,Hanoi
+2017,Stunting in children under 5 years,,Hanoi
+2018,Stunting in children under 5 years,5.5,Hanoi
+2019,Stunting in children under 5 years,5.2,Hanoi
+2020,Stunting in children under 5 years,4.9,Hanoi
+2021,Stunting in children under 5 years,3.8,Hanoi
+2022,Stunting in children under 5 years,6.7,Hanoi
+2023,Stunting in children under 5 years,6.9,Hanoi
+2010,Stunting in children under 5 years,29.3,Vietnam
+2011,Stunting in children under 5 years,27.5,Vietnam
+2012,Stunting in children under 5 years,26.7,Vietnam
+2013,Stunting in children under 5 years,25.9,Vietnam
+2014,Stunting in children under 5 years,24.9,Vietnam
+2015,Stunting in children under 5 years,24.6,Vietnam
+2016,Stunting in children under 5 years,24.3,Vietnam
+2017,Stunting in children under 5 years,23.8,Vietnam
+2018,Stunting in children under 5 years,23.2,Vietnam
+2019,Stunting in children under 5 years,22.4,Vietnam
+2020,Stunting in children under 5 years,19.5,Vietnam
+2021,Stunting in children under 5 years,,Vietnam
+2022,Stunting in children under 5 years,18.9,Vietnam
+2023,Stunting in children under 5 years,18.2,Vietnam
+2010,Overweight and obesity in children under 5 years,,Hanoi
+2011,Overweight and obesity in children under 5 years,4.1,Hanoi
+2012,Overweight and obesity in children under 5 years,,Hanoi
+2013,Overweight and obesity in children under 5 years,6.2,Hanoi
+2014,Overweight and obesity in children under 5 years,5.4,Hanoi
+2015,Overweight and obesity in children under 5 years,6.5,Hanoi
+2016,Overweight and obesity in children under 5 years,,Hanoi
+2017,Overweight and obesity in children under 5 years,,Hanoi
+2018,Overweight and obesity in children under 5 years,6.5,Hanoi
+2019,Overweight and obesity in children under 5 years,11.5,Hanoi
+2020,Overweight and obesity in children under 5 years,12.3,Hanoi
+2021,Overweight and obesity in children under 5 years,,Hanoi
+2022,Overweight and obesity in children under 5 years,8.2,Hanoi
+2023,Overweight and obesity in children under 5 years,6.1,Hanoi
+2010,Overweight and obesity in children under 5 years,,Vietnam
+2011,Overweight and obesity in children under 5 years,,Vietnam
+2012,Overweight and obesity in children under 5 years,,Vietnam
+2013,Overweight and obesity in children under 5 years,4.9,Vietnam
+2014,Overweight and obesity in children under 5 years,4.8,Vietnam
+2015,Overweight and obesity in children under 5 years,5.3,Vietnam
+2016,Overweight and obesity in children under 5 years,,Vietnam
+2017,Overweight and obesity in children under 5 years,5.9,Vietnam
+2018,Overweight and obesity in children under 5 years,7.1,Vietnam
+2019,Overweight and obesity in children under 5 years,7.4,Vietnam
+2020,Overweight and obesity in children under 5 years,7.9,Vietnam
+2021,Overweight and obesity in children under 5 years,,Vietnam
+2022,Overweight and obesity in children under 5 years,11.8,Vietnam
+2023,Overweight and obesity in children under 5 years,9.4,Vietnam
+2010,Underweight in Women,21.8,Hanoi
+2011,Underweight in Women,17.8,Hanoi
+2012,Underweight in Women,16.9,Hanoi
+2013,Underweight in Women,15.5,Hanoi
+2014,Underweight in Women,15.0,Hanoi
+2015,Underweight in Women,14.9,Hanoi
+2016,Underweight in Women,14.7,Hanoi
+2017,Underweight in Women,,Hanoi
+2018,Underweight in Women,14.2,Hanoi
+2019,Underweight in Women,13.4,Hanoi
+2020,Underweight in Women,12.6,Hanoi
+2021,Underweight in Women,12.2,Hanoi
+2022,Underweight in Women,12.2,Hanoi
+2023,Underweight in Women,12.0,Hanoi
+2010,Underweight in Women,22.22,Vietnam
+2011,Underweight in Women,21.36,Vietnam
+2012,Underweight in Women,20.5,Vietnam
+2013,Underweight in Women,19.65,Vietnam
+2014,Underweight in Women,18.81,Vietnam
+2015,Underweight in Women,18.0,Vietnam
+2016,Underweight in Women,17.2,Vietnam
+2017,Underweight in Women,16.5,Vietnam
+2018,Underweight in Women,15.8,Vietnam
+2019,Underweight in Women,15.1,Vietnam
+2020,Underweight in Women,14.4,Vietnam
+2021,Underweight in Women,13.8,Vietnam
+2022,Underweight in Women,13.2,Vietnam
+2023,Underweight in Women,,Vietnam
