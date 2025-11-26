@@ -110,14 +110,14 @@ tabs = [
 # -------------------------- Loading and Formatting All Data ------------------------- #
 
 # Loading and Formatting MPI Data
-path = "/Users/jemim/app_dev_EFS/assets/data/"
-MPI = gpd.read_file(path+"Hanoi_districts_MPI.geojson")#.set_index('Dist_Name')
-MPI['Normalized'] = MPI['Normalized'].astype(float)
+path = "/home/jemima/Data/EcoFoodSystems_Dashboard_Development/assets/data/"
+MPI = gpd.read_file(path+"/addis_adm3_mpi.geojson")#.set_index('Dist_Name')
+MPI['MPI'] = MPI['MPI'].astype(float)
 MPI['Dist_Name'] = MPI['Dist_Name'].astype(str)
 geojson = json.loads(MPI.to_json())
 
 # Loading and Formatting MPI CSV Data=
-df_mpi = pd.read_csv(path+"Hanoi_districts_MPI_long.csv")
+df_mpi = pd.read_csv(path+"addis_mpi_long.csv")
 variables = df_mpi['Variable'].unique()
 
 # Loading and Formatting Food Systems Stakeholders Data
@@ -138,15 +138,15 @@ df_diet_2 = pd.read_csv(path+'hanoi_health_nutrition_cleaned_2.csv')
 fig_ch = px.choropleth_mapbox(MPI, geojson=geojson, 
                     locations="Dist_Name", 
                     featureidkey="properties.Dist_Name",
-                    color='Normalized',
+                    color='MPI',
                     color_continuous_scale="Reds",
                     opacity=0.7,
                     range_color=(0, 1),
-                    labels={'Normalized':'MPI',
+                    labels={'MPI':'MPI',
                             'Dist_Name':'District Name'},
 
                     mapbox_style="carto-positron",
-                    zoom=7.75,
+                    zoom=10,
                     center={"lat": MPI.geometry.centroid.y.mean(), 
                             "lon": MPI.geometry.centroid.x.mean()}
                     )
@@ -868,7 +868,7 @@ def poverty_tab_layout():
 
                     ], style={
                         "width": "min(50%)",
-                        "height": "100%",
+                        #"height": "100%",
                         "padding": "10px",
                         "backgroundColor": brand_colors['Light green'],
                         "border-radius": "0",
@@ -1176,7 +1176,9 @@ def diet_nutrition_layout():
 # Linking the dropdown to the bar chart for the MPI page    
 @app.callback(
     Output('bar-plot', 'figure'),
-    Input('variable-dropdown', 'value')
+    Input('variable-dropdown', 'value'),
+    prevent_initial_call=False
+    
 )
 def update_bar(selected_variable):
     # Sort by selected variable, descending
@@ -1192,13 +1194,16 @@ def update_bar(selected_variable):
                 'Value':"Percentage of Deprived Households"},
         color_discrete_sequence=[brand_colors['Red']]
     )
-    fig.update_layout(yaxis={'categoryorder':'total ascending'},
-                      height=25 * len(sorted_df),
-                      margin=dict(l=0.15, r=0.1, t=0.15, b=0.3),
-                      hoverlabel=dict(
-                        bgcolor="white",      # Tooltip background color
-                        font_color="black",   # Tooltip text color
-    ))
+    fig.update_layout(
+        yaxis={'categoryorder':'total ascending'},
+        autosize=True,  # Allow figure to fill container
+        #height=25 * len(sorted_df),
+        margin=dict(l=0.15, r=0.1, t=0.15, b=0.3),
+        hoverlabel=dict(
+            bgcolor="white",      # Tooltip background color
+            font_color="black",   # Tooltip text color
+        )
+    )
 
     return fig
 
@@ -1214,7 +1219,7 @@ def update_map_on_bar_click(clickData, selected_variable):
         "lat": MPI.geometry.centroid.y.mean(),
         "lon": MPI.geometry.centroid.x.mean()
     }
-    zoom = 7.75
+    zoom = 10
 
     MPI_display = MPI.copy()
     MPI_display['opacity'] = 0.7
@@ -1244,11 +1249,11 @@ def update_map_on_bar_click(clickData, selected_variable):
         geojson=geojson,
         locations="Dist_Name",
         featureidkey="properties.Dist_Name",
-        color='Normalized',
+        color='MPI',
         color_continuous_scale="Reds",
         opacity=0.7,
         range_color=(0, 1),
-        labels={'Normalized':'MPI','Dist_Name':'District Name'},
+        labels={'MPI':'MPI','Dist_Name':'District Name'},
         mapbox_style="carto-positron",
         zoom=zoom,
         center=center
@@ -1636,4 +1641,4 @@ def render_tab_content(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8051)
