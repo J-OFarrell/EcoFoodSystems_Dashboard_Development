@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "addis_food_security",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "NAME_3": "Addis Ketema", "Secure": 36.0, "Mild Food Insecurity  ": 25.8, "Moderate-Severe Food Insecurity": 38.2 }, "geometry": { "type": "Point", "coordinates": [ 38.726557225996913, 9.03828049 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Akaki Kality", "Secure": 18.9, "Mild Food Insecurity  ": 33.1, "Moderate-Severe Food Insecurity": 48.0 }, "geometry": { "type": "Point", "coordinates": [ 38.809920013044419, 8.89918661 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Arada", "Secure": 54.7, "Mild Food Insecurity  ": 24.2, "Moderate-Severe Food Insecurity": 21.1 }, "geometry": { "type": "Point", "coordinates": [ 38.757972208039646, 9.03537321 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Bole", "Secure": 84.7, "Mild Food Insecurity  ": 0.6, "Moderate-Severe Food Insecurity": 14.7 }, "geometry": { "type": "Point", "coordinates": [ 38.836021900016235, 8.982083795 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Gulele", "Secure": 28.0, "Mild Food Insecurity  ": 30.7, "Moderate-Severe Food Insecurity": 30.7 }, "geometry": { "type": "Point", "coordinates": [ 38.738525342412885, 9.07104492 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Kirkos", "Secure": 62.6, "Mild Food Insecurity  ": 12.5, "Moderate-Severe Food Insecurity": 24.9 }, "geometry": { "type": "Point", "coordinates": [ 38.757417457231348, 9.002730845 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Kolfe Keraniyo", "Secure": 72.4, "Mild Food Insecurity  ": 13.8, "Moderate-Severe Food Insecurity": 13.8 }, "geometry": { "type": "Point", "coordinates": [ 38.688430520526111, 9.013316155 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Lideta", "Secure": 44.7, "Mild Food Insecurity  ": 44.8, "Moderate-Severe Food Insecurity": 10.5 }, "geometry": { "type": "Point", "coordinates": [ 38.727892572580473, 9.01197672 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Nifas Silk Lafto", "Secure": 60.4, "Mild Food Insecurity  ": 23.1, "Moderate-Severe Food Insecurity": 16.6 }, "geometry": { "type": "Point", "coordinates": [ 38.721014497169904, 8.950686455 ] } },
+{ "type": "Feature", "properties": { "NAME_3": "Yeka", "Secure": 50.0, "Mild Food Insecurity  ": 13.9, "Moderate-Severe Food Insecurity": 36.1 }, "geometry": { "type": "Point", "coordinates": [ 38.825250281694544, 9.0485816 ] } }
+]
+}
