@@ -786,11 +786,11 @@ def poverty_tab_layout():
         html.Div([
         dbc.Card([
                 dbc.CardBody([
-                    html.H2("Food Environment Analysis", style=header_style),
-                    html.P(lorem.words(80),
+                    html.H2("Multidimensional Poverty Index", style=header_style),
+                    html.P("The Multidimensional Poverty Index (MPI) assesses poverty across health, education, and living standards using ten indicators including nutrition, schooling, sanitation, water, electricity, and housing. This spatial analysis maps deprivation levels across Addis Ababa's sub-cities, revealing where households face multiple overlapping disadvantages. These insights identify priority areas for targeted interventions, supporting equitable resource allocation and sustainable poverty reduction strategies aligned with SDG goals.",
                             style={  "margin": "10px 6px", 
                                     "fontSize": 'clamp(0.7em, 1em, 1.0em)',
-                                    "textAlign": "center",
+                                    "textAlign": "justify",
                                     "whiteSpace": "normal",
                                     })
                             ])
@@ -903,7 +903,7 @@ def affordability_tab_layout():
                             html.P("This map shows the distribution of healthy and unhealthy food outlets across Addis Ababa's sub-cities. The obesogenic ratio reveals where unhealthy outlets dominate, indicating areas with limited access to nutritious food. Population exposure metrics highlight which communities face the greatest imbalance, providing evidence to guide equitable food policy interventions. This analysis forms part of a broader assessment integrating socioeconomic and built environment factors.",
                                        style={  "margin": "10px 6px", 
                                                 "fontSize": 'clamp(0.7em, 1em, 1.0em)',
-                                                "textAlign": "center",
+                                                "textAlign": "justify",
                                                 "whiteSpace": "normal",
                                                 })],
                                 style={
@@ -1262,17 +1262,6 @@ def policies_tab_layout():
                         style_data_conditional=[
                             {'if': {'row_index': 'odd'}, 'backgroundColor': '#f9f9f9'}
                         ],
-                        tooltip_data=[
-                            {
-                                column: {'value': str(row[column]), 'type': 'text'}
-                                for column in df_policies.columns
-                            } for row in df_policies.to_dict('records')
-                        ],
-                        tooltip_duration=None,
-                        css=[{
-                            'selector': '.dash-table-tooltip',
-                            'rule': 'background-color: ' + brand_colors['Light green'] + '; color: ' + brand_colors['Black'] + '; border: 2px solid ' + brand_colors['Dark green'] + '; padding: 6px; font-size: 14px; box-shadow: 0 4px 8px ' + brand_colors['Black'] + ';'
-                        }],
                         style_table={
                             'overflowX': 'auto',
                             'width': '100%',
@@ -1728,7 +1717,13 @@ def update_affordability_map(selected_metric, selected_outlets, relayout_data):
     # Add outlet markers if selected
     if selected_outlets:
         # Dark/vivid blue color palette for outlet markers (stands out against light red/green choropleth)
-        blue_palette = ["#e00065","#fa5a0f","#ffda0a","#00a0d1","#6a17de"]
+        blue_palette = [
+                    "#1a3a3a",  
+                    "#4a2c2a",  
+                    "#2d4263",  
+                    "#3d1f1f",  
+                    "#2c4a2c",  
+                ]
         
         for i, filename in enumerate(selected_outlets):
             outlet_gdf = gpd.read_file(outlets_path + filename).to_crs('EPSG:4326')
@@ -1837,26 +1832,64 @@ def update_food_items_grid(selected_group):
     # Filter items by selected group
     filtered_df = df_lca[df_lca['Food Group'] == selected_group].sort_values('Item Cd')
     
+    # Calculate percentile thresholds for traffic light system across all foods
+    # Lower values are better for environmental impact
+    thresholds = {
+        'Total GHG Emissions': {
+            'green': df_lca['Total GHG Emissions'].quantile(0.33),
+            'yellow': df_lca['Total GHG Emissions'].quantile(0.67)
+        },
+        'Freshwater Comsumption (l)': {
+            'green': df_lca['Freshwater Comsumption (l)'].quantile(0.33),
+            'yellow': df_lca['Freshwater Comsumption (l)'].quantile(0.67)
+        },
+        'Acidification (kg SO2eq)': {
+            'green': df_lca['Acidification (kg SO2eq)'].quantile(0.33),
+            'yellow': df_lca['Acidification (kg SO2eq)'].quantile(0.67)
+        },
+        'Eutrophication (kg PO43-eq)': {
+            'green': df_lca['Eutrophication (kg PO43-eq)'].quantile(0.33),
+            'yellow': df_lca['Eutrophication (kg PO43-eq)'].quantile(0.67)
+        }
+    }
+    
+    def get_traffic_light_colors(value, indicator):
+        """Return border and shadow colors based on traffic light system (green=good, yellow=medium, red=bad)"""
+        if value <= thresholds[indicator]['green']:
+            return {"border": "#2e7d32", "shadow": "#a5d6a7"}  # Dark green border, light green shadow
+        elif value <= thresholds[indicator]['yellow']:
+            return {"border": "#f57f17", "shadow": "#fff59d"}  # Dark yellow border, light yellow shadow
+        else:
+            return {"border": "#c62828", "shadow": "#ef9a9a"}  # Dark red border, light red shadow
+    
     # Create a card for each food item
     food_cards = []
     for _, row in filtered_df.iterrows():
-        # Create 2x2 grid of mini KPI cards
+        # Create 2x2 grid of mini KPI cards with traffic light colors
         mini_kpis = html.Div([
             # Row 1: GHG and Water
             html.Div([
                 # GHG mini card
                 html.Div([
                     html.Div("GHG", style={"fontSize": "0.7em", "color": brand_colors['Brown'], "marginBottom": "2px"}),
-                    html.Div(f"{row['Total GHG Emissions']:.4f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Red']}),
+                    html.Div(f"{row['Total GHG Emissions']:.4f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Brown']}),
                     html.Div("kg CO₂-eq", style={"fontSize": "0.6em", "color": brand_colors['Brown']})
-                ], style={"flex": "1", "textAlign": "center", "padding": "8px", "backgroundColor": "#f9f9f9", "borderRadius": "5px", "margin": "3px"}),
+                ], style={"flex": "1", "textAlign": "center", "padding": "8px", 
+                         "backgroundColor": brand_colors['White'], 
+                         "border": f"2px solid {get_traffic_light_colors(row['Total GHG Emissions'], 'Total GHG Emissions')['border']}",
+                         "boxShadow": f"0 2px 8px {get_traffic_light_colors(row['Total GHG Emissions'], 'Total GHG Emissions')['shadow']}",
+                         "borderRadius": "5px", "margin": "3px"}),
                 
                 # Water mini card
                 html.Div([
                     html.Div("Water", style={"fontSize": "0.7em", "color": brand_colors['Brown'], "marginBottom": "2px"}),
-                    html.Div(f"{row['Freshwater Comsumption (l)']:.2f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Red']}),
+                    html.Div(f"{row['Freshwater Comsumption (l)']:.2f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Brown']}),
                     html.Div("liters", style={"fontSize": "0.6em", "color": brand_colors['Brown']})
-                ], style={"flex": "1", "textAlign": "center", "padding": "8px", "backgroundColor": "#f9f9f9", "borderRadius": "5px", "margin": "3px"})
+                ], style={"flex": "1", "textAlign": "center", "padding": "8px", 
+                         "backgroundColor": brand_colors['White'], 
+                         "border": f"2px solid {get_traffic_light_colors(row['Freshwater Comsumption (l)'], 'Freshwater Comsumption (l)')['border']}",
+                         "boxShadow": f"0 2px 8px {get_traffic_light_colors(row['Freshwater Comsumption (l)'], 'Freshwater Comsumption (l)')['shadow']}",
+                         "borderRadius": "5px", "margin": "3px"})
             ], style={"display": "flex", "marginBottom": "5px"}),
             
             # Row 2: Acidification and Eutrophication
@@ -1864,16 +1897,24 @@ def update_food_items_grid(selected_group):
                 # Acidification mini card
                 html.Div([
                     html.Div("Acidification", style={"fontSize": "0.7em", "color": brand_colors['Brown'], "marginBottom": "2px"}),
-                    html.Div(f"{row['Acidification (kg SO2eq)']:.6f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Red']}),
+                    html.Div(f"{row['Acidification (kg SO2eq)']:.6f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Brown']}),
                     html.Div("kg SO₂-eq", style={"fontSize": "0.6em", "color": brand_colors['Brown']})
-                ], style={"flex": "1", "textAlign": "center", "padding": "8px", "backgroundColor": "#f9f9f9", "borderRadius": "5px", "margin": "3px"}),
+                ], style={"flex": "1", "textAlign": "center", "padding": "8px", 
+                         "backgroundColor": brand_colors['White'], 
+                         "border": f"2px solid {get_traffic_light_colors(row['Acidification (kg SO2eq)'], 'Acidification (kg SO2eq)')['border']}",
+                         "boxShadow": f"0 2px 8px {get_traffic_light_colors(row['Acidification (kg SO2eq)'], 'Acidification (kg SO2eq)')['shadow']}",
+                         "borderRadius": "5px", "margin": "3px"}),
                 
                 # Eutrophication mini card
                 html.Div([
                     html.Div("Eutrophication", style={"fontSize": "0.7em", "color": brand_colors['Brown'], "marginBottom": "2px"}),
-                    html.Div(f"{row['Eutrophication (kg PO43-eq)']:.6f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Red']}),
+                    html.Div(f"{row['Eutrophication (kg PO43-eq)']:.6f}", style={"fontSize": "1em", "fontWeight": "bold", "color": brand_colors['Brown']}),
                     html.Div("kg PO₄³⁻-eq", style={"fontSize": "0.6em", "color": brand_colors['Brown']})
-                ], style={"flex": "1", "textAlign": "center", "padding": "8px", "backgroundColor": "#f9f9f9", "borderRadius": "5px", "margin": "3px"})
+                ], style={"flex": "1", "textAlign": "center", "padding": "8px", 
+                         "backgroundColor": brand_colors['White'], 
+                         "border": f"2px solid {get_traffic_light_colors(row['Eutrophication (kg PO43-eq)'], 'Eutrophication (kg PO43-eq)')['border']}",
+                         "boxShadow": f"0 2px 8px {get_traffic_light_colors(row['Eutrophication (kg PO43-eq)'], 'Eutrophication (kg PO43-eq)')['shadow']}",
+                         "borderRadius": "5px", "margin": "3px"})
             ], style={"display": "flex"})
         ])
         
